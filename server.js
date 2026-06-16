@@ -1,7 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
-const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
+const { MongoClient, ObjectId } = require('mongodb');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -17,7 +17,10 @@ let db, mandalsCollection;
 async function connectDB() {
   try {
     const client = new MongoClient(MONGO_URI, {
-      serverApi: ServerApiVersion.v1
+      tls: true,
+      tlsAllowInvalidCertificates: true,
+      serverSelectionTimeoutMS: 5000,
+      socketTimeoutMS: 45000,
     });
     await client.connect();
     db = client.db('mandal-darshan');
