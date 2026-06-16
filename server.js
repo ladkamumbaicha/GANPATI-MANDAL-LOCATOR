@@ -58,9 +58,19 @@ loadData();
 app.use(cors());
 app.use(express.json());
 
-// Redirect /index.html to root (clean URL)
+// Clean URL redirects - remove .html extensions from URLs
 app.get('/index.html', (req, res) => {
   res.redirect(301, '/');
+});
+
+// Serve admin.html when visiting /admin
+app.get('/admin', (req, res) => {
+  res.sendFile(path.join(__dirname, 'admin.html'));
+});
+
+// Redirect /admin.html to /admin (clean URL)
+app.get('/admin.html', (req, res) => {
+  res.redirect(301, '/admin');
 });
 
 // Serve static files from the root directory
@@ -235,6 +245,6 @@ module.exports = app;
 if (require.main === module) {
   app.listen(PORT, () => {
     console.log(`✓ Server running on http://localhost:${PORT}`);
-    console.log(`✓ Admin Panel at http://localhost:${PORT}/admin.html`);
+    console.log(`✓ Admin Panel at http://localhost:${PORT}/admin`);
   });
 }
