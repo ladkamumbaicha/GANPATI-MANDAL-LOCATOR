@@ -9,8 +9,8 @@ const PORT = process.env.PORT || 3000;
 // Admin password
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'daksh799@';
 
-// MongoDB connection
-const MONGODB_URI = process.env.MONGODB_URI || '';
+// MongoDB connection (keep your connection string here or set MONGODB_URI env var in Vercel)
+const MONGODB_URI = process.env.MONGODB_URI || 'mongodb+srv://dakshbudhel123_db_user:daksh799@ganpatimandallocator.y08xg3g.mongodb.net/mandal-darshan?retryWrites=true&w=majority&appName=Ganpatimandallocator';
 
 // ========== MONGOOSE SETUP ==========
 const mandalSchema = new mongoose.Schema({
