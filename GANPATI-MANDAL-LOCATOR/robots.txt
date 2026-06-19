@@ -3,4 +3,4 @@ User-agent: *
 Allow: /
 
 # Sitemap location
-Sitemap: https://ganpati-mandal-locator.vercel.app/sitemap.xml
+Sitemap: https://ganpatimandallocator.dpdns.org/sitemap.xml
