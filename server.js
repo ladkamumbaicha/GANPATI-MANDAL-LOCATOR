@@ -59,6 +59,19 @@ async function seedDefaultData() {
 app.use(cors());
 app.use(express.json());
 
+// ========== SEO & ROBOTS/SITEMAP ==========
+// Serve sitemap.xml with proper content type
+app.get('/sitemap.xml', (req, res) => {
+  res.set('Content-Type', 'application/xml');
+  res.sendFile(path.join(__dirname, 'sitemap.xml'));
+});
+
+// Serve robots.txt with proper content type
+app.get('/robots.txt', (req, res) => {
+  res.set('Content-Type', 'text/plain');
+  res.sendFile(path.join(__dirname, 'robots.txt'));
+});
+
 // Clean URL redirects - remove .html extensions from URLs
 app.get('/index.html', (req, res) => {
   res.redirect(301, '/');
