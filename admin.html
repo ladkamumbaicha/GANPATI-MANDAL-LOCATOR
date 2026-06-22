@@ -1192,6 +1192,7 @@
 
         <div class="admin-footer">
             <p>✨ Mandal Darshan Admin Panel — Made with ❤️ by <span class="brand">Ladka Mumbai Cha</span> ✨</p>
+            <button class="btn-logout" onclick="adminLogout()" style="margin-top: 15px; width: auto; padding: 10px 30px;">🚪 Logout</button>
         </div>
     </div>
 
@@ -1448,6 +1449,17 @@
             el.textContent = text;
             el.className = 'message ' + type;
             el.style.display = 'block';
+        }
+
+        // ===== ADMIN LOGOUT =====
+        function adminLogout() {
+            if (confirm('Are you sure you want to logout?')) {
+                sessionStorage.removeItem('adminLoggedIn');
+                document.getElementById('loginForm').classList.remove('hidden');
+                document.getElementById('adminDashboard').classList.add('hidden');
+                document.getElementById('passwordInput').value = '';
+                resetForm();
+            }
         }
 
         // ===== KEYBOARD SHORTCUTS =====
