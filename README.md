@@ -65,8 +65,6 @@ Each mandal record includes:
 
 
 ## Future Enhancements
-
-- User authentication system
 - Photo gallery for mandals
 - Review and rating system
 - Festive schedules and special events
@@ -75,4 +73,3 @@ Each mandal record includes:
 - Social media integration
 - Distance calculation from user location
 - Multi-language support (Marathi, Hindi)
-"# GANPATI-MANDAL-LOCATOR" 
