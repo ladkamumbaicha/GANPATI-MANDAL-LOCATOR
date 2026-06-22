@@ -538,13 +538,22 @@
         }
 
         .nav-btn-home {
-            color: var(--nav-btn-home-color);
-            background: transparent;
+            background: linear-gradient(135deg, #FF6B35, #FF4500);
+            color: white;
+            border: 1px solid #FF6B35;
+            box-shadow: 0 4px 15px rgba(255, 107, 53, 0.2);
         }
 
         .nav-btn-home:hover {
-            color: #FF6B35;
+            background: linear-gradient(135deg, #FF4500, #FF6B35);
+            color: white;
+            border-color: #FF4500;
+            box-shadow: 0 6px 20px rgba(255, 107, 53, 0.4);
             transform: translateY(-2px);
+        }
+
+        .nav-btn-home:active {
+            transform: translateY(-1px);
         }
 
         .nav-btn-admin {
