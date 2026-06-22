@@ -2,6 +2,8 @@ const express = require('express');
 const cors = require('cors');
 const path = require('path');
 const mongoose = require('mongoose');
+const multer = require('multer');
+const fs = require('fs');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -128,6 +130,43 @@ app.get('/admin.html', (req, res) => {
   res.redirect(301, '/admin');
 });
 
+// ========== FILE UPLOAD SETUP ==========
+const uploadsDir = path.join(__dirname, 'uploads');
+if (!fs.existsSync(uploadsDir)) {
+  fs.mkdirSync(uploadsDir, { recursive: true });
+}
+
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, uploadsDir);
+  },
+  filename: (req, file, cb) => {
+    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+    const ext = path.extname(file.originalname).toLowerCase();
+    cb(null, 'mandal-' + uniqueSuffix + ext);
+  }
+});
+
+const fileFilter = (req, file, cb) => {
+  const allowed = /jpeg|jpg|png|webp|gif/;
+  const ext = allowed.test(path.extname(file.originalname).toLowerCase());
+  const mime = allowed.test(file.mimetype);
+  if (ext && mime) {
+    cb(null, true);
+  } else {
+    cb(new Error('Only image files are allowed (JPEG, PNG, WebP, GIF)'));
+  }
+};
+
+const upload = multer({
+  storage,
+  fileFilter,
+  limits: { fileSize: 5 * 1024 * 1024 }
+});
+
+// Serve uploads folder statically
+app.use('/uploads', express.static(uploadsDir));
+
 // Serve static files from the root directory
 const staticPath = __dirname;
 console.log('Static path:', staticPath);
@@ -219,6 +258,15 @@ app.get('/api/mandals/:id', async (req, res) => {
     console.error('Error fetching mandal:', err.message);
     res.status(500).json({ error: err.message });
   }
+});
+
+// Upload image (admin)
+app.post('/api/upload', upload.single('image'), (req, res) => {
+  if (!req.file) {
+    return res.status(400).json({ error: 'No image file provided' });
+  }
+  const imageUrl = '/uploads/' + req.file.filename;
+  res.json({ success: true, image_url: imageUrl });
 });
 
 // Add new mandal (admin)
