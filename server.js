@@ -33,8 +33,49 @@ const mandalSchema = new mongoose.Schema({
 
 const Mandal = mongoose.model('Mandal', mandalSchema);
 
+// ========== FALLBACK IN-MEMORY DATABASE ==========
+let useInMemory = false;
+let inMemoryMandals = [];
+let nextId = 1;
+
+function toResponse(m) {
+  return {
+    id: m._id ? m._id.toString() : String(m._localId || m.id),
+    name: m.name,
+    address: m.address,
+    latitude: m.latitude,
+    longitude: m.longitude,
+    email: m.email,
+    area: m.area,
+    image_url: m.image_url,
+    morning_arti: m.morning_arti,
+    afternoon_arti: m.afternoon_arti,
+    evening_arti: m.evening_arti,
+    description: m.description,
+    established_year: m.established_year,
+    quote: m.quote
+  };
+}
+
 // ========== SEED DEFAULT DATA ==========
 async function seedDefaultData() {
+  if (useInMemory) {
+    if (inMemoryMandals.length === 0) {
+      console.log('No mandals found, seeding default data...');
+      const defaults = [
+        { name: 'Lalbaugcha Raja', address: 'Lalbaug, Mumbai', latitude: 19.0176, longitude: 72.8479, email: 'lalbaug@mandal.com', area: 'Central Mumbai', image_url: 'https://images.unsplash.com/photo-1585687572407-1d1e4e61f5e3?w=500&h=350&fit=crop', morning_arti: '06:30 AM', afternoon_arti: '01:30 PM', evening_arti: '08:00 PM', description: 'One of the most famous Ganpati pandals in Mumbai.', established_year: '1934', quote: 'Lalbaugcha Raja Sarkar!' },
+        { name: 'Ganesh Mandal', address: 'Girgaum, Mumbai', latitude: 18.9520, longitude: 72.8289, email: 'ganesh@mandal.com', area: 'South Mumbai', image_url: 'https://images.unsplash.com/photo-1599058917212-d217368e6651?w=500&h=350&fit=crop', morning_arti: '06:00 AM', afternoon_arti: '02:00 PM', evening_arti: '07:30 PM', description: 'A historic mandal serving the Girgaum community.', established_year: '1920' },
+        { name: 'Andhericha Raja', address: 'Andheri, Mumbai', latitude: 19.1136, longitude: 72.8697, email: 'andheri@mandal.com', area: 'North Mumbai', image_url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTL7ASrWHEVzGxJY_9p5yYXqFQJIvjFllV2WQ&s', morning_arti: '07:00 AM', afternoon_arti: '02:30 PM', evening_arti: '07:00 PM', description: 'The beloved Raja of Andheri.', established_year: '1966' },
+        { name: 'Ganesh Galli Mandal', address: 'Lalbaug, Mumbai', latitude: 19.0185, longitude: 72.8465, email: 'ganeshgalli@mandal.com', area: 'Central Mumbai', image_url: 'https://images.unsplash.com/photo-1588519119230-80ffe68ec159?w=500&h=350&fit=crop', morning_arti: '06:00 AM', afternoon_arti: '01:00 PM', evening_arti: '08:30 PM', description: 'Famous for its creative themes each year.', established_year: '1948' }
+      ];
+      inMemoryMandals = defaults.map(d => ({ ...d, _localId: nextId++ }));
+      console.log('✓ Default mandals seeded successfully (in-memory)');
+    } else {
+      console.log('✓ Found', inMemoryMandals.length, 'existing mandals (in-memory)');
+    }
+    return;
+  }
+
   try {
     const count = await Mandal.countDocuments();
     if (count === 0) {
@@ -90,7 +131,6 @@ app.get('/admin.html', (req, res) => {
 // Serve static files from the root directory
 const staticPath = __dirname;
 console.log('Static path:', staticPath);
-console.log('✓ Using MongoDB for persistent database');
 app.use(express.static(staticPath));
 
 // ========== LOGIN ENDPOINT ==========
@@ -109,13 +149,22 @@ app.post('/api/login', (req, res) => {
   }
 });
 
+// ========== IN-MEMORY HELPERS ==========
+function findInMemory(id) {
+  return inMemoryMandals.find(m => (m._id ? m._id.toString() : String(m._localId)) === id);
+}
+
 // ========== API ROUTES ==========
 
 // Get all mandals
 app.get('/api/mandals', async (req, res) => {
   try {
+    if (useInMemory) {
+      const result = inMemoryMandals.map(toResponse).sort((a, b) => a.name.localeCompare(b.name));
+      return res.json(result);
+    }
     const mandals = await Mandal.find().sort({ name: 1 }).lean();
-    const result = mandals.map(m => ({ id: m._id.toString(), name: m.name, address: m.address, latitude: m.latitude, longitude: m.longitude, email: m.email, area: m.area, image_url: m.image_url, morning_arti: m.morning_arti, afternoon_arti: m.afternoon_arti, evening_arti: m.evening_arti, description: m.description, established_year: m.established_year, quote: m.quote }));
+    const result = mandals.map(m => toResponse(m));
     res.json(result);
   } catch (err) {
     console.error('Error fetching mandals:', err.message);
@@ -127,6 +176,14 @@ app.get('/api/mandals', async (req, res) => {
 app.get('/api/mandals/search', async (req, res) => {
   const query = (req.query.q || '').toLowerCase();
   try {
+    if (useInMemory) {
+      const result = inMemoryMandals
+        .filter(m => (m.name || '').toLowerCase().includes(query) || (m.address || '').toLowerCase().includes(query) || (m.area || '').toLowerCase().includes(query))
+        .slice(0, 50)
+        .sort((a, b) => (a.name || '').localeCompare(b.name || ''))
+        .map(toResponse);
+      return res.json(result);
+    }
     const mandals = await Mandal.find({
       $or: [
         { name: { $regex: query, $options: 'i' } },
@@ -134,7 +191,7 @@ app.get('/api/mandals/search', async (req, res) => {
         { area: { $regex: query, $options: 'i' } }
       ]
     }).limit(50).sort({ name: 1 }).lean();
-    const result = mandals.map(m => ({ id: m._id.toString(), name: m.name, address: m.address, latitude: m.latitude, longitude: m.longitude, email: m.email, area: m.area, image_url: m.image_url, morning_arti: m.morning_arti, afternoon_arti: m.afternoon_arti, evening_arti: m.evening_arti, description: m.description, established_year: m.established_year, quote: m.quote }));
+    const result = mandals.map(m => toResponse(m));
     res.json(result);
   } catch (err) {
     console.error('Error searching mandals:', err.message);
@@ -146,12 +203,18 @@ app.get('/api/mandals/search', async (req, res) => {
 app.get('/api/mandals/:id', async (req, res) => {
   const { id } = req.params;
   try {
-    const m = await Mandal.findById(id).lean();
+    let m;
+    if (useInMemory) {
+      m = findInMemory(id);
+      if (!m) return res.status(404).json({ error: 'Mandal not found' });
+      return res.json(toResponse(m));
+    }
+    m = await Mandal.findById(id).lean();
     if (!m) {
       res.status(404).json({ error: 'Mandal not found' });
       return;
     }
-    res.json({ id: m._id.toString(), name: m.name, address: m.address, latitude: m.latitude, longitude: m.longitude, email: m.email, area: m.area, image_url: m.image_url, morning_arti: m.morning_arti, afternoon_arti: m.afternoon_arti, evening_arti: m.evening_arti, description: m.description, established_year: m.established_year, quote: m.quote });
+    res.json(toResponse(m));
   } catch (err) {
     console.error('Error fetching mandal:', err.message);
     res.status(500).json({ error: err.message });
@@ -173,6 +236,27 @@ app.post('/api/mandals', async (req, res) => {
   }
 
   try {
+    if (useInMemory) {
+      const newMandal = {
+        _localId: nextId++,
+        name,
+        address: address || '',
+        latitude: parseFloat(latitude),
+        longitude: parseFloat(longitude),
+        email: email || '',
+        area: area || '',
+        image_url: image_url || '',
+        morning_arti: morning_arti || '',
+        afternoon_arti: afternoon_arti || '',
+        evening_arti: evening_arti || '',
+        description: description || '',
+        established_year: established_year || '',
+        quote: quote || ''
+      };
+      inMemoryMandals.push(newMandal);
+      return res.json({ success: true, id: String(newMandal._localId), message: 'Mandal added successfully' });
+    }
+
     const mandal = new Mandal({
       name, address, latitude: parseFloat(latitude), longitude: parseFloat(longitude),
       email: email || '', area: area || '',
@@ -200,6 +284,25 @@ app.put('/api/mandals/:id', async (req, res) => {
   }
 
   try {
+    if (useInMemory) {
+      const m = findInMemory(id);
+      if (!m) return res.status(404).json({ error: 'Mandal not found' });
+      if (name) m.name = name;
+      if (address !== undefined) m.address = address;
+      if (latitude !== undefined) m.latitude = parseFloat(latitude);
+      if (longitude !== undefined) m.longitude = parseFloat(longitude);
+      if (email !== undefined) m.email = email;
+      if (area !== undefined) m.area = area;
+      if (image_url !== undefined) m.image_url = image_url;
+      if (morning_arti !== undefined) m.morning_arti = morning_arti;
+      if (afternoon_arti !== undefined) m.afternoon_arti = afternoon_arti;
+      if (evening_arti !== undefined) m.evening_arti = evening_arti;
+      if (description !== undefined) m.description = description;
+      if (established_year !== undefined) m.established_year = established_year;
+      if (quote !== undefined) m.quote = quote;
+      return res.json({ success: true, message: 'Mandal updated successfully' });
+    }
+
     const mandal = await Mandal.findById(id);
     if (!mandal) {
       res.status(404).json({ error: 'Mandal not found' });
@@ -240,6 +343,12 @@ app.delete('/api/mandals/:id', async (req, res) => {
   }
 
   try {
+    if (useInMemory) {
+      const idx = inMemoryMandals.findIndex(m => (m._id ? m._id.toString() : String(m._localId)) === id);
+      if (idx === -1) return res.status(404).json({ error: 'Mandal not found' });
+      inMemoryMandals.splice(idx, 1);
+      return res.json({ success: true, message: 'Mandal deleted successfully' });
+    }
     const mandal = await Mandal.findByIdAndDelete(id);
     if (!mandal) {
       res.status(404).json({ error: 'Mandal not found' });
@@ -267,9 +376,14 @@ if (require.main === module) {
         console.log(`✓ Admin Panel at http://localhost:${PORT}/admin`);
       });
     } catch (err) {
-      console.error('✗ Failed to start server:', err.message);
-      console.log('✗ Make sure MONGODB_URI environment variable is set');
-      process.exit(1);
+      console.error('✗ MongoDB connection failed:', err.message);
+      console.log('⚠ Falling back to in-memory database (data will not persist)');
+      useInMemory = true;
+      await seedDefaultData();
+      app.listen(PORT, () => {
+        console.log(`✓ Server running on http://localhost:${PORT} (in-memory mode)`);
+        console.log(`✓ Admin Panel at http://localhost:${PORT}/admin`);
+      });
     }
   }
   start();

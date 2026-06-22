@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <title>Download Mandal Darshan - Ganpati Mandal Locator</title>
+    <meta name="description" content="Download Mandal Darshan app for Android, iOS or Desktop. Find Ganpati mandals across Mumbai with locations, aarti timings and more.">
+    <meta name="theme-color" content="#0a0a14">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🙏</text></svg>" type="image/svg+xml">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root, [data-theme="dark"] {
+            --bg-primary: #0a0a14;
+            --bg-secondary: #12121f;
+            --bg-card: rgba(255, 255, 255, 0.03);
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0b0;
+            --accent: #FF6B35;
+            --accent-hover: #FF8C5A;
+            --border: rgba(255, 255, 255, 0.08);
+            --shadow: 0 20px 60px rgba(0,0,0,0.5);
+        }
+        [data-theme="light"] {
+            --bg-primary: #ffffff;
+            --bg-secondary: #f5f5f7;
+            --bg-card: rgba(0, 0, 0, 0.02);
+            --text-primary: #1a1a1a;
+            --text-secondary: #666;
+            --accent: #FF6B35;
+            --accent-hover: #e55a2b;
+            --border: rgba(0, 0, 0, 0.08);
+            --shadow: 0 20px 60px rgba(0,0,0,0.1);
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        /* Header */
+        .header {
+            padding: 20px 0;
+            border-bottom: 1px solid var(--border);
+            background: var(--bg-secondary);
+            backdrop-filter: blur(20px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: var(--text-primary);
+        }
+        .logo-icon {
+            width: 44px;
+            height: 44px;
+            background: linear-gradient(135deg, #FF6B35, #FF4500);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            box-shadow: 0 4px 20px rgba(255, 107, 53, 0.3);
+        }
+        .logo-text {
+            font-size: 20px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #fff, #FF6B35);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .back-btn {
+            padding: 10px 20px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            color: var(--text-primary);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+        .back-btn:hover {
+            background: var(--accent);
+            border-color: var(--accent);
+            transform: translateY(-2px);
+        }
+        /* Hero Section */
+        .hero {
+            padding: 80px 0 60px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at 50% 50%, rgba(255, 107, 53, 0.08) 0%, transparent 50%);
+            animation: pulse 8s ease-in-out infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+        }
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+        .app-icon {
+            width: 140px;
+            height: 140px;
+            background: linear-gradient(135deg, #FF6B35, #FF4500);
+            border-radius: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 72px;
+            margin: 0 auto 30px;
+            box-shadow: 0 20px 60px rgba(255, 107, 53, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.1) inset;
+            animation: float 3s ease-in-out infinite;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        .hero h1 {
+            font-size: clamp(32px, 5vw, 56px);
+            font-weight: 800;
+            margin-bottom: 16px;
+            background: linear-gradient(135deg, #fff 0%, #FF6B35 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -1px;
+        }
+        .hero p {
+            font-size: clamp(16px, 2vw, 20px);
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto 40px;
+            line-height: 1.6;
+        }
+        /* Download Cards */
+        .download-section {
+            padding: 40px 0 80px;
+        }
+        .download-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        .download-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 32px;
+            text-align: center;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            text-decoration: none;
+            color: var(--text-primary);
+            display: block;
+        }
+        .download-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(255, 107, 53, 0.05), transparent);
+            opacity: 0;
+            transition: opacity 0.4s;
+        }
+        .download-card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(255, 107, 53, 0.3);
+            box-shadow: var(--shadow), 0 0 40px rgba(255, 107, 53, 0.1);
+        }
+        .download-card:hover::before {
+            opacity: 1;
+        }
+        .card-icon {
+            width: 72px;
+            height: 72px;
+            background: linear-gradient(135deg, rgba(255, 107, 53, 0.1), rgba(255, 107, 53, 0.05));
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+            margin: 0 auto 20px;
+            border: 1px solid rgba(255, 107, 53, 0.2);
+        }
+        .download-card h3 {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+        .download-card p {
+            color: var(--text-secondary);
+            font-size: 14px;
+            margin-bottom: 24px;
+            line-height: 1.5;
+        }
+        .download-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 14px 32px;
+            background: linear-gradient(135deg, #FF6B35, #FF4500);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            font-family: inherit;
+        }
+        .download-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(255, 107, 53, 0.4);
+        }
+        .download-btn:active {
+            transform: translateY(0);
+        }
+        .download-btn.secondary {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+        }
+        .download-btn.secondary:hover {
+            background: var(--accent);
+            border-color: var(--accent);
+        }
+        /* Features */
+        .features {
+            padding: 60px 0;
+            background: var(--bg-secondary);
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+        }
+        .features h2 {
+            text-align: center;
+            font-size: clamp(24px, 4vw, 36px);
+            font-weight: 800;
+            margin-bottom: 48px;
+        }
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 24px;
+        }
+        .feature-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 28px;
+            text-align: center;
+            transition: all 0.3s;
+        }
+        .feature-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(255, 107, 53, 0.2);
+        }
+        .feature-icon {
+            font-size: 40px;
+            margin-bottom: 16px;
+        }
+        .feature-card h3 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        .feature-card p {
+            color: var(--text-secondary);
+            font-size: 14px;
+            line-height: 1.5;
+        }
+        /* QR Section */
+        .qr-section {
+            padding: 80px 0;
+            text-align: center;
+        }
+        .qr-section h2 {
+            font-size: clamp(24px, 4vw, 36px);
+            font-weight: 800;
+            margin-bottom: 16px;
+        }
+        .qr-section p {
+            color: var(--text-secondary);
+            margin-bottom: 40px;
+            font-size: 16px;
+        }
+        .qr-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 40px;
+            display: inline-block;
+            max-width: 400px;
+        }
+        .qr-placeholder {
+            width: 200px;
+            height: 200px;
+            background: white;
+            border-radius: 16px;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            color: #666;
+        }
+        /* Footer */
+        .footer {
+            padding: 40px 0;
+            text-align: center;
+            border-top: 1px solid var(--border);
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+        .footer a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+        .footer a:hover {
+            text-decoration: underline;
+        }
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero { padding: 60px 0 40px; }
+            .download-grid { grid-template-columns: 1fr; }
+            .features-grid { grid-template-columns: 1fr; }
+            .app-icon { width: 120px; height: 120px; font-size: 60px; }
+        }
+        @media (max-width: 480px) {
+            .header-content { flex-direction: column; gap: 12px; }
+            .download-card { padding: 24px; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container header-content">
+            <a href="/" class="logo">
+                <div class="logo-icon">🙏</div>
+                <span class="logo-text">Mandal Darshan</span>
+            </a>
+            <a href="/" class="back-btn">← Back to Website</a>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container hero-content">
+            <div class="app-icon">🙏</div>
+            <h1>Download Mandal Darshan</h1>
+            <p>Get the best experience of exploring Ganpati mandals across Mumbai. Available on Android, iOS and Desktop.</p>
+        </div>
+    </section>
+
+    <!-- Download Section -->
+    <section class="download-section">
+        <div class="container">
+            <div class="download-grid">
+                <!-- Android -->
+                <a href="https://ganpatimandallocator.dpdns.org/downloads/MandalDarshan.apk" class="download-card" onclick="trackDownload('android')">
+                    <div class="card-icon">🤖</div>
+                    <h3>Android</h3>
+                    <p>Download the APK directly or get it from Google Play</p>
+                    <span class="download-btn">
+                        📥 Download APK
+                    </span>
+                </a>
+
+                <!-- iOS -->
+                <a href="https://apps.apple.com/app/mandal-darshan" class="download-card" onclick="trackDownload('ios')">
+                    <div class="card-icon">🍎</div>
+                    <h3>iOS / iPhone</h3>
+                    <p>Download from the App Store for iPhone and iPad</p>
+                    <span class="download-btn">
+                        🍎 App Store
+                    </span>
+                </a>
+
+                <!-- Desktop / PWA -->
+                <a href="/" class="download-card" onclick="trackDownload('pwa')">
+                    <div class="card-icon">💻</div>
+                    <h3>Desktop / PWA</h3>
+                    <p>Install as a Progressive Web App on any device</p>
+                    <span class="download-btn secondary">
+                        🌐 Install Web App
+                    </span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features">
+        <div class="container">
+            <h2>Why Download the App?</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">📍</div>
+                    <h3>Find Mandals Easily</h3>
+                    <p>Locate Ganpati mandals across Mumbai with interactive maps and directions</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">⏰</div>
+                    <h3>Aarti Timings</h3>
+                    <p>Get accurate morning, afternoon and evening aarti timings for each mandal</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🗺️</div>
+                    <h3>Interactive Maps</h3>
+                    <p>View mandal locations on Google Maps with one-tap navigation</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔍</div>
+                    <h3>Smart Search</h3>
+                    <p>Search mandals by name, area or location instantly</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🌙</div>
+                    <h3>Dark Mode</h3>
+                    <p>Beautiful dark and light themes for comfortable viewing</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📱</div>
+                    <h3>Works Offline</h3>
+                    <p>Access saved mandal information even without internet</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- QR Code Section -->
+    <section class="qr-section">
+        <div class="container">
+            <h2>Scan to Download</h2>
+            <p>Point your phone camera at the QR code to download the app</p>
+            <div class="qr-card">
+                <div class="qr-placeholder">
+                    [QR Code Here]
+                </div>
+                <p style="color: var(--text-secondary); font-size: 14px; margin-top: 12px;">
+                    Scan with your phone camera
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>Made with ❤️ & devotion by <a href="https://ganpatimandallocator.dpdns.org/">Ladka Mumbai Cha (Daksh Vasani)</a></p>
+            <p style="margin-top: 8px;">© 2026 Mandal Darshan — Ganpati Bappa Morya! 🙏</p>
+        </div>
+    </footer>
+
+    <script>
+        // Track download clicks (optional analytics)
+        function trackDownload(platform) {
+            console.log('Download clicked:', platform);
+            // Add your analytics tracking here
+            // gtag('event', 'download', { platform: platform });
+        }
+    </script>
+</body>
+</html>
