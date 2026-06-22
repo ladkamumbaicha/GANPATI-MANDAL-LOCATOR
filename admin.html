@@ -1225,6 +1225,13 @@
             document.getElementById('passwordInput').addEventListener('keypress', (e) => {
                 if (e.key === 'Enter') adminLogin();
             });
+            
+            // Check if already logged in
+            if (sessionStorage.getItem('adminLoggedIn') === 'true') {
+                document.getElementById('loginForm').classList.add('hidden');
+                document.getElementById('adminDashboard').classList.remove('hidden');
+                loadMandals();
+            }
         });
 
         window.matchMedia('(prefers-color-scheme: light)').addEventListener('change', (e) => {
@@ -1276,16 +1283,6 @@
             });
         }
 
-        // ===== CHECK SESSION ON LOAD =====
-        (function checkSession() {
-            if (sessionStorage.getItem('adminLoggedIn') === 'true') {
-                document.addEventListener('DOMContentLoaded', () => {
-                    document.getElementById('loginForm').classList.add('hidden');
-                    document.getElementById('adminDashboard').classList.remove('hidden');
-                    loadMandals();
-                });
-            }
-        })();
 
         // ===== LOAD MANDALS =====
         function loadMandals() {
