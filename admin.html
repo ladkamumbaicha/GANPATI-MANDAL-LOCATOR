@@ -215,24 +215,29 @@
         }
 
         .back-link {
-            background: var(--back-link-bg);
-            color: var(--back-link-color);
+            background: linear-gradient(135deg, #FF6B35, #FF4500);
+            color: white;
             padding: 10px 22px;
             border-radius: 10px;
             text-decoration: none;
             font-weight: 500;
             transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
             font-size: clamp(11px, 0.9vw, 13px);
-            border: 1px solid var(--back-link-border);
+            border: 1px solid #FF6B35;
             white-space: nowrap;
+            box-shadow: 0 4px 15px rgba(255, 107, 53, 0.2);
         }
 
         .back-link:hover {
-            background: #FF6B35;
+            background: linear-gradient(135deg, #FF4500, #FF6B35);
             color: white;
-            border-color: #FF6B35;
-            box-shadow: 0 4px 15px rgba(255, 107, 53, 0.3);
+            border-color: #FF4500;
+            box-shadow: 0 6px 20px rgba(255, 107, 53, 0.4);
             transform: translateY(-2px);
+        }
+
+        .back-link:active {
+            transform: translateY(-1px);
         }
 
         /* ===== LOGOUT DROPDOWN (Hidden until clicked) ===== */
