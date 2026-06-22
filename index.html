@@ -582,6 +582,62 @@
             transform: translateY(-2px);
         }
 
+        /* ===== INSTALL APP BUTTON ===== */
+        .install-app-btn {
+            padding: 10px 22px;
+            border: 1.5px solid rgba(255, 107, 53, 0.4);
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: clamp(11px, 0.9vw, 13px);
+            font-family: 'Poppins', sans-serif;
+            position: relative;
+            overflow: hidden;
+            white-space: nowrap;
+            background: rgba(255, 107, 53, 0.08);
+            color: #FF6B35;
+            backdrop-filter: blur(10px);
+        }
+
+        .install-app-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            transition: left 0.6s;
+        }
+
+        .install-app-btn:hover::before { left: 100%; }
+
+        .install-app-btn:hover {
+            background: linear-gradient(135deg, #FF6B35, #FF4500);
+            color: #fff;
+            border-color: #FF6B35;
+            box-shadow: 0 4px 20px rgba(255, 107, 53, 0.4), 0 0 30px rgba(255, 107, 53, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .install-app-btn:active {
+            transform: translateY(-1px);
+        }
+
+        .install-app-btn .install-icon {
+            font-size: 16px;
+            line-height: 1;
+        }
+
+        .install-app-btn.hidden {
+            display: none !important;
+        }
+
         /* ===== THEME TOGGLE BUTTON ===== */
         .theme-toggle-btn {
             background: var(--theme-btn-bg);
@@ -616,6 +672,88 @@
 
         .theme-toggle-btn:hover .icon {
             transform: rotate(15deg);
+        }
+
+        /* ===== INSTALL PROMPT BANNER (Mobile) ===== */
+        .install-prompt-banner {
+            display: none;
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--bg-modal);
+            backdrop-filter: blur(40px);
+            -webkit-backdrop-filter: blur(40px);
+            border: 1px solid var(--modal-border);
+            border-radius: 20px;
+            padding: 16px 24px;
+            z-index: 1000;
+            box-shadow: var(--modal-shadow);
+            align-items: center;
+            gap: 16px;
+            max-width: calc(100% - 40px);
+            width: auto;
+            animation: slideUpSmooth 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .install-prompt-banner.active {
+            display: flex;
+        }
+
+        .install-prompt-banner .prompt-text {
+            color: var(--text-primary);
+            font-size: clamp(13px, 1.2vw, 15px);
+            font-weight: 500;
+            white-space: nowrap;
+        }
+
+        .install-prompt-banner .prompt-actions {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .install-prompt-banner .prompt-install-btn {
+            padding: 10px 20px;
+            background: linear-gradient(135deg, #FF6B35, #e04500);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: clamp(12px, 0.9vw, 13px);
+            font-family: 'Poppins', sans-serif;
+            white-space: nowrap;
+            transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 15px rgba(255, 107, 53, 0.3);
+        }
+
+        .install-prompt-banner .prompt-install-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 107, 53, 0.4);
+        }
+
+        .install-prompt-banner .prompt-dismiss-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            cursor: pointer;
+            font-size: 20px;
+            padding: 4px 8px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            line-height: 1;
+        }
+
+        .install-prompt-banner .prompt-dismiss-btn:hover {
+            color: #FF6B35;
+            background: rgba(255, 107, 53, 0.1);
+        }
+
+        @media (min-width: 768px) {
+            .install-prompt-banner {
+                display: none !important;
+            }
         }
 
         /* ===== MAIN CONTAINER ===== */
@@ -1722,6 +1860,12 @@
                 border-radius: 8px;
             }
 
+            .install-app-btn {
+                padding: 7px 12px;
+                font-size: 11px;
+                border-radius: 8px;
+            }
+
             .theme-toggle-btn {
                 width: 34px;
                 height: 34px;
@@ -2014,6 +2158,14 @@
             }
 
             .nav-btn {
+                padding: 6px 10px;
+                font-size: 10px;
+                border-radius: 6px;
+                flex: 1;
+                text-align: center;
+            }
+
+            .install-app-btn {
                 padding: 6px 10px;
                 font-size: 10px;
                 border-radius: 6px;
@@ -2325,8 +2477,13 @@
         * {
             transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
         }
-<script>navigator.serviceWorker.register("pwabuilder-adv-sw.js")</script> 
     </style>
+
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('pwabuilder-adv-sw.js');
+        }
+    </script>
 </head>
 <body>
     <!-- ===== NOSCRIPT FALLBACK FOR SEARCH ENGINES ===== -->
@@ -2375,8 +2532,21 @@
             <button class="theme-toggle-btn" onclick="toggleTheme()" title="Toggle theme" aria-label="Toggle dark/light mode">
                 <span class="icon" id="themeIcon">🌙</span>
             </button>
+            <button class="install-app-btn hidden" id="installAppBtn" title="Install App" aria-label="Install Mandal Darshan app">
+                <span class="install-icon">📥</span>
+                <span class="install-text">Install App</span>
+            </button>
             <a href="/index.html" class="nav-btn nav-btn-home">🏠 Home</a>
             <a href="/admin.html" class="nav-btn nav-btn-admin">⚙️ Admin</a>
+        </div>
+    </div>
+
+    <!-- Install Prompt Banner (Mobile) -->
+    <div class="install-prompt-banner" id="installPromptBanner">
+        <span class="prompt-text">📱 Install Mandal Darshan</span>
+        <div class="prompt-actions">
+            <button class="prompt-install-btn" id="promptInstallBtn">Install</button>
+            <button class="prompt-dismiss-btn" id="promptDismissBtn" aria-label="Dismiss">✕</button>
         </div>
     </div>
 
@@ -2462,6 +2632,69 @@
             const next = current === 'dark' ? 'light' : 'dark';
             setTheme(next);
         }
+
+        // ===== PWA INSTALL PROMPT =====
+        let deferredPrompt = null;
+        const installAppBtn = document.getElementById('installAppBtn');
+        const installPromptBanner = document.getElementById('installPromptBanner');
+        const promptInstallBtn = document.getElementById('promptInstallBtn');
+        const promptDismissBtn = document.getElementById('promptDismissBtn');
+
+        function showInstallUI() {
+            if (!installAppBtn || !installPromptBanner) return;
+            installAppBtn.classList.remove('hidden');
+            // Show banner on mobile only
+            if (window.innerWidth < 768) {
+                installPromptBanner.classList.add('active');
+            }
+        }
+
+        function hideInstallUI() {
+            if (installAppBtn) installAppBtn.classList.add('hidden');
+            if (installPromptBanner) installPromptBanner.classList.remove('active');
+        }
+
+        async function installPWA() {
+            if (!deferredPrompt) return;
+            deferredPrompt.prompt();
+            const { outcome } = await deferredPrompt.userChoice;
+            console.log('PWA install prompt outcome:', outcome);
+            deferredPrompt = null;
+            hideInstallUI();
+        }
+
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            showInstallUI();
+        });
+
+        window.addEventListener('appinstalled', () => {
+            console.log('PWA installed successfully');
+            deferredPrompt = null;
+            hideInstallUI();
+        });
+
+        if (installAppBtn) {
+            installAppBtn.addEventListener('click', installPWA);
+        }
+
+        if (promptInstallBtn) {
+            promptInstallBtn.addEventListener('click', installPWA);
+        }
+
+        if (promptDismissBtn) {
+            promptDismissBtn.addEventListener('click', () => {
+                hideInstallUI();
+            });
+        }
+
+        // Hide install UI if app is already installed
+        if (window.matchMedia('(display-mode: standalone)').matches) {
+            hideInstallUI();
+        }
+
+        // ===== END PWA INSTALL PROMPT =====
 
         // Initialize theme on load
         document.addEventListener('DOMContentLoaded', () => {
