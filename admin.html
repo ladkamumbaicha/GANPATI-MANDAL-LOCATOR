@@ -68,6 +68,9 @@
             --admin-footer-color: #666;
             --admin-footer-border: rgba(255, 255, 255, 0.05);
             --theme-btn-bg: rgba(255, 255, 255, 0.06);
+            --bg-modal: rgba(20, 20, 35, 0.95);
+            --modal-border: rgba(255, 255, 255, 0.1);
+            --modal-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
             --theme-btn-border: rgba(255, 255, 255, 0.08);
             --theme-btn-hover: rgba(255, 255, 255, 0.1);
             --theme-btn-color: #ddd;
@@ -124,6 +127,9 @@
             --admin-footer-color: #777;
             --admin-footer-border: rgba(0, 0, 0, 0.06);
             --theme-btn-bg: rgba(0, 0, 0, 0.05);
+            --bg-modal: rgba(255, 255, 255, 0.98);
+            --modal-border: rgba(0, 0, 0, 0.1);
+            --modal-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
             --theme-btn-border: rgba(0, 0, 0, 0.08);
             --theme-btn-hover: rgba(0, 0, 0, 0.08);
             --theme-btn-color: #555;
@@ -368,6 +374,94 @@
             backdrop-filter: blur(20px);
             transition: background 0.3s ease, border-color 0.3s ease;
             box-shadow: var(--shadow-panel);
+        }
+
+        .login-panel-welcome {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            min-height: 200px;
+        }
+
+        .login-panel-welcome .emoji-large {
+            font-size: clamp(40px, 4vw, 60px);
+            margin-bottom: 15px;
+        }
+
+        .login-panel-welcome .welcome-text {
+            font-size: clamp(14px, 1.2vw, 18px);
+            font-family: 'Playfair Display', serif;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+        }
+
+        .login-panel-welcome .welcome-subtext {
+            font-size: clamp(11px, 0.9vw, 13px);
+            color: var(--text-muted);
+            margin-top: 10px;
+        }
+
+        .login-btn-full {
+            width: 100%;
+        }
+
+        .file-upload-input {
+            padding: 10px;
+            background: var(--input-bg);
+            border: 1.5px solid var(--input-border);
+            border-radius: 10px;
+            color: var(--text-input);
+            cursor: pointer;
+            width: 100%;
+        }
+
+        .upload-preview {
+            margin-top: 10px;
+            display: none;
+            text-align: center;
+        }
+
+        .upload-preview img {
+            max-width: 200px;
+            max-height: 150px;
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+        }
+
+        .upload-remove-btn {
+            margin-top: 8px;
+            padding: 6px 12px;
+            background: rgba(220, 53, 69, 0.15);
+            color: #ff6b6b;
+            border: 1px solid rgba(220, 53, 69, 0.2);
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 12px;
+            transition: all 0.2s ease;
+        }
+
+        .upload-remove-btn:hover {
+            background: rgba(220, 53, 69, 0.25);
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 30px;
+        }
+
+        .loading-text {
+            padding: 40px;
+            text-align: center;
+            color: var(--text-muted);
+        }
+
+        .logout-btn {
+            margin-top: 15px;
+            width: auto;
+            padding: 10px 30px;
         }
 
         .hidden {
@@ -728,22 +822,50 @@
             }
         }
 
-        /* ===== TABLET / SMALL LAPTOP (1024px - 1399px) ===== */
-        @media (min-width: 1024px) and (max-width: 1399px) {
+        /* ===== STANDARD LAPTOP (1280px - 1439px) ===== */
+        @media (min-width: 1280px) and (max-width: 1439px) {
             .container {
-                padding: 20px;
+                max-width: 1200px;
+                padding: 22px;
             }
 
             .header {
-                padding: 25px 30px;
+                padding: 28px 32px;
             }
 
             .content {
-                gap: 25px;
+                gap: 28px;
             }
 
             .login-panel, .form-panel, .list-panel {
-                padding: 25px;
+                padding: 28px;
+            }
+
+            .dashboard-grid {
+                grid-template-columns: 1fr 1.5fr;
+            }
+        }
+
+        /* ===== SMALL LAPTOP (1024px - 1279px) ===== */
+        @media (min-width: 1024px) and (max-width: 1279px) {
+            .container {
+                padding: 18px;
+            }
+
+            .header {
+                padding: 22px 26px;
+            }
+
+            .content {
+                gap: 22px;
+            }
+
+            .login-panel, .form-panel, .list-panel {
+                padding: 22px;
+            }
+
+            .dashboard-grid {
+                grid-template-columns: 1fr 1.5fr;
             }
         }
 
@@ -1087,19 +1209,19 @@
                             </button>
                         </div>
                     </div>
-                    <button class="btn-primary" onclick="adminLogin()" style="width: 100%;">🔑 Login</button>
+                    <button class="btn-primary login-btn-full" onclick="adminLogin()">🔑 Login</button>
                 </div>
             </div>
-            <div class="login-panel" style="display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; min-height: 200px;">
-                <div style="font-size: clamp(40px, 4vw, 60px); margin-bottom: 15px;">🙏</div>
-                <p style="font-size: clamp(14px, 1.2vw, 18px); font-family: 'Playfair Display', serif; color: var(--text-secondary);">Welcome to the Mandal Darshan Admin Panel</p>
-                <p style="font-size: clamp(11px, 0.9vw, 13px); color: var(--text-muted); margin-top: 10px;">Manage your Ganpati mandal listings with ease.</p>
+            <div class="login-panel login-panel-welcome">
+                <div class="emoji-large">🙏</div>
+                <p class="welcome-text">Welcome to the Mandal Darshan Admin Panel</p>
+                <p class="welcome-subtext">Manage your Ganpati mandal listings with ease.</p>
             </div>
         </div>
 
         <!-- Admin Dashboard -->
         <div class="content hidden" id="adminDashboard">
-            <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 30px;">
+            <div class="dashboard-grid">
                 <div class="form-panel" id="formPanel">
                     <div class="section-title" id="formTitle">➕ Add New Mandal</div>
                     <div id="formMessage"></div>
@@ -1144,10 +1266,10 @@
 
                     <div class="form-group">
                         <label>Or Upload Local Photo</label>
-                        <input type="file" id="imageUpload" accept="image/*" style="padding: 10px; background: var(--input-bg); border: 1.5px solid var(--input-border); border-radius: 10px; color: var(--text-input); cursor: pointer; width: 100%;">
-                        <div id="uploadPreview" style="margin-top: 10px; display: none; text-align: center;">
-                            <img id="previewImg" style="max-width: 200px; max-height: 150px; border-radius: 10px; border: 1px solid var(--border-color);">
-                            <button type="button" onclick="clearUpload()" style="margin-top: 8px; padding: 6px 12px; background: rgba(220, 53, 69, 0.15); color: #ff6b6b; border: 1px solid rgba(220, 53, 69, 0.2); border-radius: 8px; cursor: pointer; font-size: 12px;">✕ Remove</button>
+                        <input type="file" id="imageUpload" accept="image/*" class="file-upload-input">
+                        <div id="uploadPreview" class="upload-preview">
+                            <img id="previewImg">
+                            <button type="button" onclick="clearUpload()" class="upload-remove-btn">✕ Remove</button>
                         </div>
                     </div>
 
@@ -1198,7 +1320,7 @@
                         <button class="btn-secondary" onclick="document.getElementById('adminSearch').value='';filterMandals();">Clear</button>
                     </div>
                     <div id="mandalList">
-                        <div class="loading" style="padding: 40px; text-align: center; color: var(--text-muted);">Loading mandals...</div>
+                        <div class="loading-text">Loading mandals...</div>
                     </div>
                 </div>
             </div>
@@ -1206,7 +1328,7 @@
 
         <div class="admin-footer">
             <p>✨ Mandal Darshan Admin Panel — Made with ❤️ by <span class="brand">Ladka Mumbai Cha</span> ✨</p>
-            <button class="btn-logout" onclick="adminLogout()" style="margin-top: 15px; width: auto; padding: 10px 30px;">🚪 Logout</button>
+            <button class="btn-logout logout-btn" onclick="adminLogout()">🚪 Logout</button>
         </div>
     </div>
 
