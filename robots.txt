@@ -1,6 +1,4 @@
-# Allow all crawlers
 User-agent: *
 Allow: /
 
-# Sitemap location
 Sitemap: https://ganpatimandallocator.dpdns.org/sitemap.xml
