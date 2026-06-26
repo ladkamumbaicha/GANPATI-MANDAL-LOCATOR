@@ -1,16 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?xml-stylesheet type="text/xsl" href="https://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsl"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://ganpatimandallocator.dpdns.org/</loc>
-    <lastmod>2026-06-19</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>1.0</priority>
+    <lastmod>2026-06-26</lastmod>
   </url>
+
   <url>
-    <loc>https://ganpatimandallocator.dpdns.org/admin</loc>
-    <lastmod>2026-06-19</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.3</priority>
+    <loc>https://ganpatimandallocator.dpdns.org/mandals</loc>
+    <lastmod>2026-06-26</lastmod>
   </url>
 </urlset>
