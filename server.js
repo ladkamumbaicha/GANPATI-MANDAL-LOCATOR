@@ -409,6 +409,41 @@ app.delete('/api/mandals/:id', async (req, res) => {
   }
 });
 
+
+// ========== PUBLIC PAGE FALLBACK ROUTES ==========
+// Fixes direct URL access for pages like /mandals on Render.
+// Keep this AFTER all /api routes so API requests are not caught by the website fallback.
+app.use((req, res, next) => {
+  if (req.method !== 'GET') return next();
+
+  // Do not interfere with API, uploads, sitemap, robots, or real static asset files.
+  if (
+    req.path.startsWith('/api/') ||
+    req.path.startsWith('/uploads/') ||
+    req.path === '/sitemap.xml' ||
+    req.path === '/robots.txt' ||
+    path.extname(req.path)
+  ) {
+    return next();
+  }
+
+  // If a matching clean HTML file exists, serve it.
+  // Example: /mandals -> mandals.html
+  const cleanPath = req.path.replace(/^\/+/, '') || 'index';
+  const matchingHtmlFile = path.join(__dirname, `${cleanPath}.html`);
+  if (fs.existsSync(matchingHtmlFile)) {
+    return res.sendFile(matchingHtmlFile);
+  }
+
+  // Otherwise send index.html so React / client-side routes work on refresh/direct open.
+  const indexFile = path.join(__dirname, 'index.html');
+  if (fs.existsSync(indexFile)) {
+    return res.sendFile(indexFile);
+  }
+
+  return next();
+});
+
 // ========== EXPORT for serverless platforms ==========
 module.exports = app;
 
