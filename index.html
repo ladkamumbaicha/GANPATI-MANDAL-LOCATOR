@@ -1079,11 +1079,6 @@
             width: fit-content;
         }
 
-        .mandal-badge.glow {
-            border-color: var(--badge-glow-border);
-            box-shadow: var(--badge-glow-shadow);
-        }
-
         .mandal-info {
             padding: 24px 28px;
             position: relative;
@@ -2803,7 +2798,6 @@
                     <div class="mandal-image">
                         ${mandal.image_url ? `<img src="${mandal.image_url}" alt="${mandal.name}" onerror="this.style.display='none'" loading="lazy">` : '🏛️'}
                         <div class="badge-container">
-                            <span class="mandal-badge glow">✨ Ganpati Bappa Morya</span>
                             <span class="mandal-badge">#${index + 1}</span>
                         </div>
                     </div>
