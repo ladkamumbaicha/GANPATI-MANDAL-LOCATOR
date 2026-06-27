@@ -644,6 +644,33 @@
         }
 
         .mandal-info {
+
+        .social-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-top: 8px;
+        }
+        .social-link {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.05);
+            color: #ccc;
+            text-decoration: none;
+            font-size: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: all 0.3s ease;
+        }
+        .social-link:hover {
+            background: rgba(255, 107, 53, 0.2);
+            border-color: rgba(255, 107, 53, 0.4);
+            color: #ff6b35;
+            transform: translateY(-2px);
+        }
             font-size: clamp(11px, 0.8vw, 12px);
             color: var(--mandal-info-color);
             margin-bottom: 12px;
@@ -1288,6 +1315,42 @@
                         </div>
                     </div>
 
+                    <div class="sub-title">🔗 Social Media & Links</div>
+                    <div class="row-2col">
+                        <div class="form-group">
+                            <label for="instagram">📸 Instagram</label>
+                            <input type="url" id="instagram" placeholder="https://instagram.com/...">
+                        </div>
+                        <div class="form-group">
+                            <label for="facebook">📘 Facebook</label>
+                            <input type="url" id="facebook" placeholder="https://facebook.com/...">
+                        </div>
+                    </div>
+                    <div class="row-2col">
+                        <div class="form-group">
+                            <label for="twitter">🐦 Twitter / X</label>
+                            <input type="url" id="twitter" placeholder="https://x.com/...">
+                        </div>
+                        <div class="form-group">
+                            <label for="youtube">▶️ YouTube</label>
+                            <input type="url" id="youtube" placeholder="https://youtube.com/...">
+                        </div>
+                    </div>
+                    <div class="row-2col">
+                        <div class="form-group">
+                            <label for="whatsapp">💬 WhatsApp</label>
+                            <input type="url" id="whatsapp" placeholder="https://wa.me/...">
+                        </div>
+                        <div class="form-group">
+                            <label for="telegram">✈️ Telegram</label>
+                            <input type="url" id="telegram" placeholder="https://t.me/...">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="website">🌐 Website</label>
+                        <input type="url" id="website" placeholder="https://...">
+                    </div>
+
                     <div class="form-group">
                         <label for="description">Description</label>
                         <textarea id="description" placeholder="Write a brief description about this mandal..."></textarea>
@@ -1307,6 +1370,15 @@
                     <div class="arti-row full">
                         <div class="form-group">
                             <label for="evening_arti">🌙 Evening Aarti</label>
+                        ${m.instagram || m.facebook || m.twitter || m.youtube || m.whatsapp || m.telegram || m.website ? `<br><div class="social-links">
+                            ${m.instagram ? `<a href="${m.instagram}" class="social-link" target="_blank" rel="noopener noreferrer" title="Instagram" onclick="event.stopPropagation()">📸</a>` : ''}
+                            ${m.facebook ? `<a href="${m.facebook}" class="social-link" target="_blank" rel="noopener noreferrer" title="Facebook" onclick="event.stopPropagation()">📘</a>` : ''}
+                            ${m.twitter ? `<a href="${m.twitter}" class="social-link" target="_blank" rel="noopener noreferrer" title="Twitter" onclick="event.stopPropagation()">🐦</a>` : ''}
+                            ${m.youtube ? `<a href="${m.youtube}" class="social-link" target="_blank" rel="noopener noreferrer" title="YouTube" onclick="event.stopPropagation()">▶️</a>` : ''}
+                            ${m.whatsapp ? `<a href="${m.whatsapp}" class="social-link" target="_blank" rel="noopener noreferrer" title="WhatsApp" onclick="event.stopPropagation()">💬</a>` : ''}
+                            ${m.telegram ? `<a href="${m.telegram}" class="social-link" target="_blank" rel="noopener noreferrer" title="Telegram" onclick="event.stopPropagation()">✈️</a>` : ''}
+                            ${m.website ? `<a href="${m.website}" class="social-link" target="_blank" rel="noopener noreferrer" title="Website" onclick="event.stopPropagation()">🌐</a>` : ''}
+                        </div>` : ''}
                             <input type="text" id="evening_arti" placeholder="e.g. 08:00 PM">
                         </div>
                     </div>
@@ -1455,6 +1527,15 @@
                         🌐 ${m.latitude ? m.latitude.toFixed(4) : 'N/A'}, ${m.longitude ? m.longitude.toFixed(4) : 'N/A'}
                         ${m.established_year ? ` | 📅 ${m.established_year}` : ''}
                         ${m.morning_arti || m.afternoon_arti || m.evening_arti ? `<br>⏰ ${m.morning_arti || '—'} | ${m.afternoon_arti || '—'} | ${m.evening_arti || '—'}` : ''}
+                        ${m.instagram || m.facebook || m.twitter || m.youtube || m.whatsapp || m.telegram || m.website ? `<br><div class="social-links">
+                            ${m.instagram ? `<a href="${m.instagram}" class="social-link" target="_blank" rel="noopener noreferrer" title="Instagram" onclick="event.stopPropagation()">📸</a>` : ''}
+                            ${m.facebook ? `<a href="${m.facebook}" class="social-link" target="_blank" rel="noopener noreferrer" title="Facebook" onclick="event.stopPropagation()">📘</a>` : ''}
+                            ${m.twitter ? `<a href="${m.twitter}" class="social-link" target="_blank" rel="noopener noreferrer" title="Twitter" onclick="event.stopPropagation()">🐦</a>` : ''}
+                            ${m.youtube ? `<a href="${m.youtube}" class="social-link" target="_blank" rel="noopener noreferrer" title="YouTube" onclick="event.stopPropagation()">▶️</a>` : ''}
+                            ${m.whatsapp ? `<a href="${m.whatsapp}" class="social-link" target="_blank" rel="noopener noreferrer" title="WhatsApp" onclick="event.stopPropagation()">💬</a>` : ''}
+                            ${m.telegram ? `<a href="${m.telegram}" class="social-link" target="_blank" rel="noopener noreferrer" title="Telegram" onclick="event.stopPropagation()">✈️</a>` : ''}
+                            ${m.website ? `<a href="${m.website}" class="social-link" target="_blank" rel="noopener noreferrer" title="Website" onclick="event.stopPropagation()">🌐</a>` : ''}
+                        </div>` : ''}
                     </div>
                     <div class="mandal-actions">
                         <button class="btn-primary" onclick="editMandal('${m.id}')">✏️ Edit</button>
@@ -1488,6 +1569,13 @@
                 image_url: document.getElementById('image_url').value.trim(),
                 established_year: document.getElementById('established_year').value.trim(),
                 quote: document.getElementById('quote').value.trim(),
+                instagram: document.getElementById('instagram').value.trim(),
+                facebook: document.getElementById('facebook').value.trim(),
+                twitter: document.getElementById('twitter').value.trim(),
+                youtube: document.getElementById('youtube').value.trim(),
+                whatsapp: document.getElementById('whatsapp').value.trim(),
+                telegram: document.getElementById('telegram').value.trim(),
+                website: document.getElementById('website').value.trim(),
                 description: document.getElementById('description').value.trim(),
                 morning_arti: document.getElementById('morning_arti').value.trim(),
                 afternoon_arti: document.getElementById('afternoon_arti').value.trim(),
@@ -1536,6 +1624,13 @@
             document.getElementById('image_url').value = m.image_url || '';
             document.getElementById('established_year').value = m.established_year || '';
             document.getElementById('quote').value = m.quote || '';
+            document.getElementById('instagram').value = m.instagram || '';
+            document.getElementById('facebook').value = m.facebook || '';
+            document.getElementById('twitter').value = m.twitter || '';
+            document.getElementById('youtube').value = m.youtube || '';
+            document.getElementById('whatsapp').value = m.whatsapp || '';
+            document.getElementById('telegram').value = m.telegram || '';
+            document.getElementById('website').value = m.website || '';
             document.getElementById('description').value = m.description || '';
             document.getElementById('morning_arti').value = m.morning_arti || '';
             document.getElementById('afternoon_arti').value = m.afternoon_arti || '';
@@ -1576,7 +1671,7 @@
             isEditing = false;
             document.getElementById('editId').value = '';
             document.getElementById('formTitle').textContent = '➕ Add New Mandal';
-            ['name','latitude','longitude','address','area','email','image_url','established_year','quote','description','morning_arti','afternoon_arti','evening_arti'].forEach(id => {
+            ['name','latitude','longitude','address','area','email','image_url','established_year','quote','description','morning_arti','afternoon_arti','evening_arti','instagram','facebook','twitter','youtube','whatsapp','telegram','website'].forEach(id => {
                 document.getElementById(id).value = '';
             });
             document.getElementById('formMessage').innerHTML = '';

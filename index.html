@@ -2876,8 +2876,40 @@
                     <div class="detail-value">${mandal.email || 'N/A'}</div>
                 </div>
 
+                ${mandal.instagram || mandal.facebook || mandal.twitter || mandal.youtube || mandal.whatsapp || mandal.telegram || mandal.website ? `
+                <div class="detail-row">
+                    <div class="detail-label">🔗 Connect</div>
+                    <div class="detail-value">
+                        <div class="social-links">
+                            ${mandal.instagram ? `<a href="${mandal.instagram}" class="social-link" target="_blank" rel="noopener noreferrer" title="Instagram">📸</a>` : ''}
+                            ${mandal.facebook ? `<a href="${mandal.facebook}" class="social-link" target="_blank" rel="noopener noreferrer" title="Facebook">📘</a>` : ''}
+                            ${mandal.twitter ? `<a href="${mandal.twitter}" class="social-link" target="_blank" rel="noopener noreferrer" title="Twitter">🐦</a>` : ''}
+                            ${mandal.youtube ? `<a href="${mandal.youtube}" class="social-link" target="_blank" rel="noopener noreferrer" title="YouTube">▶️</a>` : ''}
+                            ${mandal.whatsapp ? `<a href="${mandal.whatsapp}" class="social-link" target="_blank" rel="noopener noreferrer" title="WhatsApp">💬</a>` : ''}
+                            ${mandal.telegram ? `<a href="${mandal.telegram}" class="social-link" target="_blank" rel="noopener noreferrer" title="Telegram">✈️</a>` : ''}
+                            ${mandal.website ? `<a href="${mandal.website}" class="social-link" target="_blank" rel="noopener noreferrer" title="Website">🌐</a>` : ''}
+                        </div>
+                    </div>
+                </div>
+                ` : ''}
                 <div class="detail-row" style="border-bottom: none;">
                     <div class="detail-label">🗺️ Map</div>
+                ${mandal.instagram || mandal.facebook || mandal.twitter || mandal.youtube || mandal.whatsapp || mandal.telegram || mandal.website ? `
+                <div class="detail-row">
+                    <div class="detail-label">🔗 Connect</div>
+                    <div class="detail-value">
+                        <div class="social-links">
+                            ${mandal.instagram ? `<a href="${mandal.instagram}" class="social-link" target="_blank" rel="noopener noreferrer" title="Instagram">📸</a>` : ''}
+                            ${mandal.facebook ? `<a href="${mandal.facebook}" class="social-link" target="_blank" rel="noopener noreferrer" title="Facebook">📘</a>` : ''}
+                            ${mandal.twitter ? `<a href="${mandal.twitter}" class="social-link" target="_blank" rel="noopener noreferrer" title="Twitter">🐦</a>` : ''}
+                            ${mandal.youtube ? `<a href="${mandal.youtube}" class="social-link" target="_blank" rel="noopener noreferrer" title="YouTube">▶️</a>` : ''}
+                            ${mandal.whatsapp ? `<a href="${mandal.whatsapp}" class="social-link" target="_blank" rel="noopener noreferrer" title="WhatsApp">💬</a>` : ''}
+                            ${mandal.telegram ? `<a href="${mandal.telegram}" class="social-link" target="_blank" rel="noopener noreferrer" title="Telegram">✈️</a>` : ''}
+                            ${mandal.website ? `<a href="${mandal.website}" class="social-link" target="_blank" rel="noopener noreferrer" title="Website">🌐</a>` : ''}
+                        </div>
+                    </div>
+                </div>
+                ` : ''}
                     <div class="detail-value">
                         <div id="mandalMap" style="height: 300px; width: 100%; border-radius: 16px; overflow: hidden; border: var(--leaflet-border);"></div>
                     </div>
@@ -2995,5 +3027,10 @@
             }
         });
     </script>
+</body>
+</html>t>
+</body>
+</html>
+</html>t>
 </body>
 </html>

@@ -29,6 +29,13 @@ const mandalSchema = new mongoose.Schema({
   description: { type: String, default: '' },
   established_year: { type: String, default: '' },
   quote: { type: String, default: '' },
+  instagram: { type: String, default: '' },
+  facebook: { type: String, default: '' },
+  twitter: { type: String, default: '' },
+  youtube: { type: String, default: '' },
+  whatsapp: { type: String, default: '' },
+  telegram: { type: String, default: '' },
+  website: { type: String, default: '' },
   created_at: { type: Date, default: Date.now },
   updated_at: { type: Date, default: Date.now }
 });
@@ -55,7 +62,14 @@ function toResponse(m) {
     evening_arti: m.evening_arti,
     description: m.description,
     established_year: m.established_year,
-    quote: m.quote
+    quote: m.quote,
+    instagram: m.instagram,
+    facebook: m.facebook,
+    twitter: m.twitter,
+    youtube: m.youtube,
+    whatsapp: m.whatsapp,
+    telegram: m.telegram,
+    website: m.website
   };
 }
 
@@ -65,11 +79,16 @@ async function seedDefaultData() {
     if (inMemoryMandals.length === 0) {
       console.log('No mandals found, seeding default data...');
       const defaults = [
-        { name: 'Lalbaugcha Raja', address: 'Lalbaug, Mumbai', latitude: 19.0176, longitude: 72.8479, email: 'lalbaug@mandal.com', area: 'Central Mumbai', image_url: 'https://images.unsplash.com/photo-1585687572407-1d1e4e61f5e3?w=500&h=350&fit=crop', morning_arti: '06:30 AM', afternoon_arti: '01:30 PM', evening_arti: '08:00 PM', description: 'One of the most famous Ganpati pandals in Mumbai.', established_year: '1934', quote: 'Lalbaugcha Raja Sarkar!' },
-        { name: 'Ganesh Mandal', address: 'Girgaum, Mumbai', latitude: 18.9520, longitude: 72.8289, email: 'ganesh@mandal.com', area: 'South Mumbai', image_url: 'https://images.unsplash.com/photo-1599058917212-d217368e6651?w=500&h=350&fit=crop', morning_arti: '06:00 AM', afternoon_arti: '02:00 PM', evening_arti: '07:30 PM', description: 'A historic mandal serving the Girgaum community.', established_year: '1920' },
-        { name: 'Andhericha Raja', address: 'Andheri, Mumbai', latitude: 19.1136, longitude: 72.8697, email: 'andheri@mandal.com', area: 'North Mumbai', image_url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTL7ASrWHEVzGxJY_9p5yYXqFQJIvjFllV2WQ&s', morning_arti: '07:00 AM', afternoon_arti: '02:30 PM', evening_arti: '07:00 PM', description: 'The beloved Raja of Andheri.', established_year: '1966' },
-        { name: 'Ganesh Galli Mandal', address: 'Lalbaug, Mumbai', latitude: 19.0185, longitude: 72.8465, email: 'ganeshgalli@mandal.com', area: 'Central Mumbai', image_url: 'https://images.unsplash.com/photo-1588519119230-80ffe68ec159?w=500&h=350&fit=crop', morning_arti: '06:00 AM', afternoon_arti: '01:00 PM', evening_arti: '08:30 PM', description: 'Famous for its creative themes each year.', established_year: '1948' }
+        { name: 'Lalbaugcha Raja', address: 'Lalbaug, Mumbai', latitude: 19.0176, longitude: 72.8479, email: 'lalbaug@mandal.com', area: 'Central Mumbai', image_url: 'https://images.unsplash.com/photo-1585687572407-1d1e4e61f5e3?w=500&h=350&fit=crop', morning_arti: '06:30 AM', afternoon_arti: '01:30 PM', evening_arti: '08:00 PM', description: 'One of the most famous Ganpati pandals in Mumbai.', established_year: '1934', quote: 'Lalbaugcha Raja Sarkar!',
+        instagram: '', facebook: '', twitter: '', youtube: '', whatsapp: '', telegram: '', website: '' },
+        { name: 'Ganesh Mandal', address: 'Girgaum, Mumbai', latitude: 18.9520, longitude: 72.8289, email: 'ganesh@mandal.com', area: 'South Mumbai', image_url: 'https://images.unsplash.com/photo-1599058917212-d217368e6651?w=500&h=350&fit=crop', morning_arti: '06:00 AM', afternoon_arti: '02:00 PM', evening_arti: '07:30 PM', description: 'A historic mandal serving the Girgaum community.', established_year: '1920',
+        instagram: '', facebook: '', twitter: '', youtube: '', whatsapp: '', telegram: '', website: '' },
+        { name: 'Andhericha Raja', address: 'Andheri, Mumbai', latitude: 19.1136, longitude: 72.8697, email: 'andheri@mandal.com', area: 'North Mumbai', image_url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTL7ASrWHEVzGxJY_9p5yYXqFQJIvjFllV2WQ&s', morning_arti: '07:00 AM', afternoon_arti: '02:30 PM', evening_arti: '07:00 PM', description: 'The beloved Raja of Andheri.', established_year: '1966',
+        instagram: '', facebook: '', twitter: '', youtube: '', whatsapp: '', telegram: '', website: '' },
+        { name: 'Ganesh Galli Mandal', address: 'Lalbaug, Mumbai', latitude: 19.0185, longitude: 72.8465, email: 'ganeshgalli@mandal.com', area: 'Central Mumbai', image_url: 'https://images.unsplash.com/photo-1588519119230-80ffe68ec159?w=500&h=350&fit=crop', morning_arti: '06:00 AM', afternoon_arti: '01:00 PM', evening_arti: '08:30 PM', description: 'Famous for its creative themes each year.', established_year: '1948',
+        instagram: '', facebook: '', twitter: '', youtube: '', whatsapp: '', telegram: '', website: ''
       ];
+
       inMemoryMandals = defaults.map(d => ({ ...d, _localId: nextId++ }));
       console.log('✓ Default mandals seeded successfully (in-memory)');
     } else {
@@ -271,7 +290,7 @@ app.post('/api/upload', upload.single('image'), (req, res) => {
 
 // Add new mandal (admin)
 app.post('/api/mandals', async (req, res) => {
-  const { password, name, address, latitude, longitude, email, area, image_url, morning_arti, afternoon_arti, evening_arti, description, established_year, quote } = req.body;
+  const { password, name, address, latitude, longitude, email, area, image_url, morning_arti, afternoon_arti, evening_arti, description, established_year, quote, instagram, facebook, twitter, youtube, whatsapp, telegram, website } = req.body;
 
   if (password !== ADMIN_PASSWORD) {
     res.status(401).json({ error: 'Invalid admin password' });
@@ -299,7 +318,14 @@ app.post('/api/mandals', async (req, res) => {
         evening_arti: evening_arti || '',
         description: description || '',
         established_year: established_year || '',
-        quote: quote || ''
+        quote: quote || '',
+        instagram: instagram || '',
+        facebook: facebook || '',
+        twitter: twitter || '',
+        youtube: youtube || '',
+        whatsapp: whatsapp || '',
+        telegram: telegram || '',
+        website: website || ''
       };
       inMemoryMandals.push(newMandal);
       return res.json({ success: true, id: String(newMandal._localId), message: 'Mandal added successfully' });
@@ -311,7 +337,14 @@ app.post('/api/mandals', async (req, res) => {
       image_url: image_url || '', morning_arti: morning_arti || '',
       afternoon_arti: afternoon_arti || '', evening_arti: evening_arti || '',
       description: description || '', established_year: established_year || '',
-      quote: quote || ''
+      quote: quote || '',
+        instagram: instagram || '',
+        facebook: facebook || '',
+        twitter: twitter || '',
+        youtube: youtube || '',
+        whatsapp: whatsapp || '',
+        telegram: telegram || '',
+        website: website || ''
     });
     const saved = await mandal.save();
     res.json({ success: true, id: saved._id.toString(), message: 'Mandal added successfully' });
@@ -323,7 +356,7 @@ app.post('/api/mandals', async (req, res) => {
 
 // Update mandal (admin)
 app.put('/api/mandals/:id', async (req, res) => {
-  const { password, name, address, latitude, longitude, email, area, image_url, morning_arti, afternoon_arti, evening_arti, description, established_year, quote } = req.body;
+  const { password, name, address, latitude, longitude, email, area, image_url, morning_arti, afternoon_arti, evening_arti, description, established_year, quote, instagram, facebook, twitter, youtube, whatsapp, telegram, website } = req.body;
   const { id } = req.params;
 
   if (password !== ADMIN_PASSWORD) {
@@ -348,6 +381,13 @@ app.put('/api/mandals/:id', async (req, res) => {
       if (description !== undefined) m.description = description;
       if (established_year !== undefined) m.established_year = established_year;
       if (quote !== undefined) m.quote = quote;
+      if (instagram !== undefined) m.instagram = instagram;
+      if (facebook !== undefined) m.facebook = facebook;
+      if (twitter !== undefined) m.twitter = twitter;
+      if (youtube !== undefined) m.youtube = youtube;
+      if (whatsapp !== undefined) m.whatsapp = whatsapp;
+      if (telegram !== undefined) m.telegram = telegram;
+      if (website !== undefined) m.website = website;
       return res.json({ success: true, message: 'Mandal updated successfully' });
     }
 
@@ -370,6 +410,13 @@ app.put('/api/mandals/:id', async (req, res) => {
     if (description !== undefined) mandal.description = description;
     if (established_year !== undefined) mandal.established_year = established_year;
     if (quote !== undefined) mandal.quote = quote;
+    if (instagram !== undefined) mandal.instagram = instagram;
+    if (facebook !== undefined) mandal.facebook = facebook;
+    if (twitter !== undefined) mandal.twitter = twitter;
+    if (youtube !== undefined) mandal.youtube = youtube;
+    if (whatsapp !== undefined) mandal.whatsapp = whatsapp;
+    if (telegram !== undefined) mandal.telegram = telegram;
+    if (website !== undefined) mandal.website = website;
     mandal.updated_at = new Date();
 
     await mandal.save();
