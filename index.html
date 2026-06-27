@@ -1121,6 +1121,30 @@
             transition: color 0.3s ease;
         }
 
+        .social-links-text {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 10px;
+            padding-left: 22px;
+        }
+
+        .social-text-link {
+            color: var(--accent-color);
+            text-decoration: none;
+            font-size: clamp(11px, 0.85vw, 13px);
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 4px 8px;
+            border-radius: 6px;
+            background: rgba(255, 107, 53, 0.08);
+        }
+
+        .social-text-link:hover {
+            background: rgba(255, 107, 53, 0.15);
+            transform: translateY(-1px);
+        }
+
         /* ===== GLASS MODAL ===== */
         .modal {
             display: none;
@@ -2808,6 +2832,16 @@
                         ${mandal.area ? `<div class="mandal-area">📌 ${mandal.area}</div>` : ''}
                         ${mandal.description ? `<div class="mandal-description">${mandal.description}</div>` : ''}
                         ${mandal.established_year ? `<div class="established-badge">📅 Est. ${mandal.established_year}</div>` : ''}
+                        ${mandal.instagram || mandal.facebook || mandal.twitter || mandal.youtube || mandal.whatsapp || mandal.telegram || mandal.website ? `
+                        <div class="social-links-text">
+                            ${mandal.instagram ? `<a href="${mandal.instagram}" class="social-text-link" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()">Instagram</a>` : ''}
+                            ${mandal.facebook ? `<a href="${mandal.facebook}" class="social-text-link" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()">Facebook</a>` : ''}
+                            ${mandal.twitter ? `<a href="${mandal.twitter}" class="social-text-link" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()">Twitter</a>` : ''}
+                            ${mandal.youtube ? `<a href="${mandal.youtube}" class="social-text-link" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()">YouTube</a>` : ''}
+                            ${mandal.whatsapp ? `<a href="${mandal.whatsapp}" class="social-text-link" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()">WhatsApp</a>` : ''}
+                            ${mandal.telegram ? `<a href="${mandal.telegram}" class="social-text-link" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()">Telegram</a>` : ''}
+                            ${mandal.website ? `<a href="${mandal.website}" class="social-text-link" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()">Website</a>` : ''}
+                        </div>` : ''}
                     </div>
                 </div>
             `).join('');
@@ -2876,6 +2910,22 @@
                     <div class="detail-value">${mandal.email || 'N/A'}</div>
                 </div>
 
+                ${mandal.instagram || mandal.facebook || mandal.twitter || mandal.youtube || mandal.whatsapp || mandal.telegram || mandal.website ? `
+                <div class="detail-row">
+                    <div class="detail-label">🔗 Connect</div>
+                    <div class="detail-value">
+                        <div class="social-links-text">
+                            ${mandal.instagram ? `<a href="${mandal.instagram}" class="social-text-link" target="_blank" rel="noopener noreferrer">Instagram</a>` : ''}
+                            ${mandal.facebook ? `<a href="${mandal.facebook}" class="social-text-link" target="_blank" rel="noopener noreferrer">Facebook</a>` : ''}
+                            ${mandal.twitter ? `<a href="${mandal.twitter}" class="social-text-link" target="_blank" rel="noopener noreferrer">Twitter</a>` : ''}
+                            ${mandal.youtube ? `<a href="${mandal.youtube}" class="social-text-link" target="_blank" rel="noopener noreferrer">YouTube</a>` : ''}
+                            ${mandal.whatsapp ? `<a href="${mandal.whatsapp}" class="social-text-link" target="_blank" rel="noopener noreferrer">WhatsApp</a>` : ''}
+                            ${mandal.telegram ? `<a href="${mandal.telegram}" class="social-text-link" target="_blank" rel="noopener noreferrer">Telegram</a>` : ''}
+                            ${mandal.website ? `<a href="${mandal.website}" class="social-text-link" target="_blank" rel="noopener noreferrer">Website</a>` : ''}
+                        </div>
+                    </div>
+                </div>
+                ` : ''}
 
                 <div class="detail-row" style="border-bottom: none;">
                     <div class="detail-label">🗺️ Map</div>
