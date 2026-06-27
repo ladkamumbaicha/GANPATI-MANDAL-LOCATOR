@@ -87,7 +87,7 @@ async function seedDefaultData() {
         instagram: '', facebook: '', twitter: '', youtube: '', whatsapp: '', telegram: '', website: '' },
         { name: 'Ganesh Galli Mandal', address: 'Lalbaug, Mumbai', latitude: 19.0185, longitude: 72.8465, email: 'ganeshgalli@mandal.com', area: 'Central Mumbai', image_url: 'https://images.unsplash.com/photo-1588519119230-80ffe68ec159?w=500&h=350&fit=crop', morning_arti: '06:00 AM', afternoon_arti: '01:00 PM', evening_arti: '08:30 PM', description: 'Famous for its creative themes each year.', established_year: '1948',
         instagram: '', facebook: '', twitter: '', youtube: '', whatsapp: '', telegram: '', website: ''
-      ];
+      }];
 
       inMemoryMandals = defaults.map(d => ({ ...d, _localId: nextId++ }));
       console.log('✓ Default mandals seeded successfully (in-memory)');
